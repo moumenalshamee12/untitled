@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:untitled/core/constant/colors.dart';
-import 'package:untitled/features/auth/presntaoin/pages/login_view.dart';
-import 'package:untitled/features/auth/presntaoin/pages/signup_view.dart';
-import 'package:untitled/features/root_page.dart';
+import 'package:untitled/features/real_states/presentoin/pages/real_states_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,10 +17,19 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: AppBarThemeData(
+          backgroundColor: AppColor().primaryColor,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         scaffoldBackgroundColor: AppColor().backgroundColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor().primaryColor),
       ),
-      home: const RootPage(),
+      home: const RealStatesPage(),
     );
   }
 }

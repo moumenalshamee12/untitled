@@ -8,7 +8,7 @@ class FetchRealStateByIdCase {
 
   FetchRealStateByIdCase({required this.realStateRepo});
 
-  Future<Either<ServerFailure, RealStateEntitey>> call(int id) async {
+  Future<Either<ServerFailure, RealStateEntity>> call(int id) async {
     return await realStateRepo.fetchrealstatebyid(id);
   }
 }

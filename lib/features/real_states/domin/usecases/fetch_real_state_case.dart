@@ -7,7 +7,7 @@ class FetchRealStateCase {
   final RealStateRepo realStateRepo;
 
   FetchRealStateCase({required this.realStateRepo});
-  Future<Either<ServerFailure, List<RealStateEntitey>>> call() async {
-    return await realStateRepo.fetchrealstate();
+  Future<Either<ServerFailure, List<RealStateEntity>>> call() async {
+    return await realStateRepo.fetchrealstates();
   }
 }

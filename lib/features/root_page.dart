@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/core/constant/colors.dart';
+import 'package:untitled/features/real_states/presentoin/pages/real_states_page.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -14,7 +15,7 @@ class _RootPageState extends State<RootPage> {
   static final List<Widget> _pages = <Widget>[
     const _HomePage(),
     const _FinishingPage(),
-    const _RealStatePage(),
+    const RealStatesPage(),
     const _MyRequestsPage(),
   ];
 
@@ -84,20 +85,6 @@ class _FinishingPage extends StatelessWidget {
     return const Center(
       child: Text(
         'Finishing Page',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class _RealStatePage extends StatelessWidget {
-  const _RealStatePage();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Real State Page',
         style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
     );
