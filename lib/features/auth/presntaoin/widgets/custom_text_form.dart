@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/core/constant/colors.dart';
 
@@ -27,7 +26,7 @@ class CustomTextform extends StatefulWidget {
 }
 
 class _CustomTextformState extends State<CustomTextform> {
-  bool isobs = false;
+  bool isobs = true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +45,7 @@ class _CustomTextformState extends State<CustomTextform> {
 
         prefixIcon: widget.prefix,
         labelText: widget.labelText,
-        labelStyle: TextStyle(color: AppColor().secondaryColor),
         hintText: widget.hintlabel,
-        hintStyle: TextStyle(
-          color: AppColor().primaryColor,
-          fontWeight: FontWeight.w200,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(
-            color: AppColor().primaryColor,
-            style: BorderStyle.solid,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(
-            color: AppColor().primaryColor,
-            style: BorderStyle.solid,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: AppColor().primaryColor),
-        ),
       ),
       controller: widget.controller,
       cursorColor: AppColor().primaryColor,
@@ -85,10 +61,9 @@ class _CustomTextformState extends State<CustomTextform> {
   }
 
   Icon returnicon(bool hidden) {
-    if (hidden) {
-      return Icon(CupertinoIcons.eye, color: AppColor().primaryColor);
-    } else {
-      return Icon(CupertinoIcons.eye_slash, color: AppColor().primaryColor);
-    }
+    return Icon(
+      hidden ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+      color: AppColor().primaryColor,
+    );
   }
 }

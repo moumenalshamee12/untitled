@@ -1,18 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
-import 'package:untitled/core/utils/api_service.dart';
+import 'package:untitled/core/service_locator.dart';
 import 'package:untitled/core/utils/error_snackbar.dart';
 import 'package:untitled/core/utils/success_snackbar.dart';
-import 'package:untitled/features/auth/data/data_source/auth_remote_data_source.dart';
-import 'package:untitled/features/auth/data/repo/auth_repp_imp.dart';
 import 'package:untitled/features/auth/domain/usecases/login_case.dart';
 import 'package:untitled/features/auth/presntaoin/manger/login_cubit/login_cubit.dart';
 import 'package:untitled/features/auth/presntaoin/manger/login_cubit/login_states.dart';
-import 'package:untitled/features/auth/presntaoin/pages/profile_view.dart';
 import 'package:untitled/features/auth/presntaoin/pages/signup_view.dart';
 import 'package:untitled/features/auth/presntaoin/widgets/login_body.dart';
+import 'package:untitled/features/root_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -20,15 +17,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => LoginCubit(
-        LoginUseCase(
-          authRepo: AuthReppImp(
-            authRemoteDataSource: AuthRemoteDataSourceimp(
-              apiService: ApiService(dio: Dio()),
-            ),
-          ),
-        ),
-      ),
+      create: (_) => LoginCubit(getIt<LoginUseCase>()),
       child: const LoginView(),
     );
   }
@@ -70,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
           showErrorSnackBar(context, state.error);
         } else if (state is LoginSuccessState) {
           showSuccessSnackBar(context, state.message);
-          Get.offAll(const ProfileView());
+          Get.offAll(const RootPage());
         }
       },
       builder: (context, state) {

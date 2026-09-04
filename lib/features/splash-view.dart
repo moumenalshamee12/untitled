@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/state_manager.dart';
+import 'package:untitled/core/constant/colors.dart';
 import 'package:untitled/core/constant/images_paths.dart';
-import 'package:untitled/features/auth/data/data_source/auth_remote_data_source.dart';
-import 'package:untitled/features/auth/data/repo/auth_repp_imp.dart';
-import 'package:untitled/features/auth/domain/usecases/login_case.dart';
-import 'package:untitled/features/auth/presntaoin/manger/login_cubit/login_cubit.dart';
-import 'package:untitled/features/auth/presntaoin/pages/login_view.dart';
-import 'package:untitled/core/utils/api_service.dart';
-import 'package:dio/dio.dart';
+import 'package:untitled/features/auth/presntaoin/pages/signup_view.dart';
 
 class splashView extends StatefulWidget {
   const splashView({super.key});
@@ -46,12 +38,11 @@ class _splashViewState extends State<splashView>
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
 
-      Get.off(
+      Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const LoginPage(),
-          transitionsBuilder: (_, animation, __, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
+          pageBuilder: (_, __, ___) => const SignupPage(),
+          transitionsBuilder: (_, animation, __, child) =>
+              FadeTransition(opacity: animation, child: child),
           transitionDuration: const Duration(milliseconds: 600),
         ),
       );
@@ -67,19 +58,78 @@ class _splashViewState extends State<splashView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Opacity(
-              opacity: _fadeAnimation.value,
-              child: Transform.scale(
-                scale: _scaleAnimation.value,
-                child: child,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColor().primaryColor,
+              AppColor().primaryColor.withValues(alpha: 0.88),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _fadeAnimation.value,
+                  child: Transform.scale(
+                    scale: _scaleAnimation.value,
+                    child: child,
+                  ),
+                );
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 176,
+                    height: 176,
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(42),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.16),
+                          blurRadius: 28,
+                          offset: const Offset(0, 14),
+                        ),
+                      ],
+                    ),
+                    child: Image.asset(AppImages().logo),
+                  ),
+                  const SizedBox(height: 28),
+                  const Text(
+                    'بيتك يبدأ من هنا',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'اكتشف العقارات واحصل على أفضل خدمات التشطيب',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.5,
+                      color: AppColor().secondaryColor,
+                    ),
+                  ),
+                ],
               ),
-            );
-          },
-          child: Image.asset(AppImages().logo),
+            ),
+          ),
         ),
       ),
     );

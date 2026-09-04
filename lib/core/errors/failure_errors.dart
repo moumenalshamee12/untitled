@@ -20,6 +20,11 @@ class ServerFailure extends Failure {
       case DioExceptionType.badCertificate:
         return ServerFailure('Bad certificate from API server');
       case DioExceptionType.badResponse:
+        if (e.response?.statusCode == 404) {
+          return ServerFailure(
+            'API endpoint not found: ${e.requestOptions.uri}',
+          );
+        }
         return ServerFailure.fromResponse(
           e.response?.statusCode ?? 0,
           e.response?.data,

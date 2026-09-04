@@ -26,66 +26,99 @@ class LoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        left: 20,
+        top: 24,
+        right: 20,
+        bottom: MediaQuery.viewInsetsOf(context).bottom + 24,
+      ),
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: formkey,
-            child: Column(
-              children: [
-                const SizedBox(height: 25),
-                Container(
-                  height: 200,
-                  width: 200,
-                  child: Image.asset(AppImages().logo),
-                ),
-                const SizedBox(height: 15),
-                CustomTextform(
-                  ispassword: false,
-                  controller: emailController,
-                  labelText: 'email',
-                  hintlabel: 'Enter your Email',
-                  onchange: (_) {},
-                  prefix: Icon(Icons.email, color: AppColor().primaryColor),
-                ),
-                const SizedBox(height: 15),
-                CustomTextform(
-                  ispassword: true,
-                  controller: passwordController,
-                  labelText: 'password',
-                  hintlabel: 'Enter your Password',
-                  onchange: (_) {},
-                  prefix: Icon(Icons.security, color: AppColor().primaryColor),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Customtext(
-                      text: "you dont have an account ?",
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 460),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Form(
+              key: formkey,
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      color: AppColor().primaryColor,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Column(
+                      children: [
+                        Image.asset(AppImages().logo, height: 100),
+                        const SizedBox(height: 12),
+                        const Text(
+                          'مرحباً بعودتك',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'سجّل الدخول لإدارة طلباتك',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  CustomTextform(
+                    ispassword: false,
+                    controller: emailController,
+                    labelText: 'البريد الإلكتروني',
+                    hintlabel: 'أدخل بريدك الإلكتروني',
+                    onchange: (_) {},
+                    prefix: Icon(Icons.email, color: AppColor().primaryColor),
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextform(
+                    ispassword: true,
+                    controller: passwordController,
+                    labelText: 'كلمة المرور',
+                    hintlabel: 'أدخل كلمة المرور',
+                    onchange: (_) {},
+                    prefix: Icon(
+                      Icons.security,
                       color: AppColor().primaryColor,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Get.to(const SignupPage());
-                      },
-                      child: Customtext(
-                        text: "sign up",
-                        color: AppColor().secondaryColor,
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Customtext(
+                        text: 'ليس لديك حساب؟',
+                        color: AppColor().primaryColor,
                       ),
-                    ),
+                      TextButton(
+                        onPressed: () {
+                          Get.to(const SignupPage());
+                        },
+                        child: Customtext(
+                          text: 'إنشاء حساب',
+                          color: AppColor().secondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  CustomButton(
+                    text: isLoading ? 'جاري الدخول...' : 'تسجيل الدخول',
+                    ontap: isLoading ? null : onLoginPressed,
+                  ),
+                  if (isLoading) ...[
+                    const SizedBox(height: 16),
+                    const CircularProgressIndicator(),
                   ],
-                ),
-                const SizedBox(height: 15),
-                CustomButton(
-                  text: isLoading ? "Loading..." : "Login",
-                  ontap: isLoading ? null : onLoginPressed,
-                ),
-                if (isLoading) ...[
-                  const SizedBox(height: 16),
-                  const CircularProgressIndicator(),
                 ],
-              ],
+              ),
             ),
           ),
         ),

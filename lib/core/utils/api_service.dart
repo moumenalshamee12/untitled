@@ -8,7 +8,14 @@ class ApiService {
   ApiService({required Dio dio}) : _dio = dio;
 
   Future<Response> post(String endpoint, {Map<String, dynamic>? data}) async {
-    final response = await _dio.post('$baseUrl$endpoint', data: data);
+    final token = await Token().gettoken();
+    final response = await _dio.post(
+      '$baseUrl$endpoint',
+      data: data,
+      options: Options(
+        headers: token != null ? {'Authorization': 'Bearer $token'} : null,
+      ),
+    );
     return response;
   }
 

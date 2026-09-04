@@ -1,12 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
-import 'package:untitled/core/utils/api_service.dart';
+import 'package:untitled/core/service_locator.dart';
 import 'package:untitled/core/utils/error_snackbar.dart';
 import 'package:untitled/core/utils/success_snackbar.dart';
-import 'package:untitled/features/auth/data/data_source/auth_remote_data_source.dart';
-import 'package:untitled/features/auth/data/repo/auth_repp_imp.dart';
 import 'package:untitled/features/auth/domain/usecases/signup_case.dart';
 import 'package:untitled/features/auth/presntaoin/manger/signup_cubit/signup_cubit.dart';
 import 'package:untitled/features/auth/presntaoin/manger/signup_cubit/signup_states.dart';
@@ -19,15 +16,7 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SignupCubit(
-        SignupUseCase(
-          authRepo: AuthReppImp(
-            authRemoteDataSource: AuthRemoteDataSourceimp(
-              apiService: ApiService(dio: Dio()),
-            ),
-          ),
-        ),
-      ),
+      create: (_) => SignupCubit(getIt<SignupUseCase>()),
       child: const SignupView(),
     );
   }

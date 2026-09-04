@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/core/constant/colors.dart';
+import 'package:untitled/features/auth/presntaoin/pages/profile_view.dart';
+import 'package:untitled/features/finishing_companies/presentoin/pages/finishing_companies_page.dart';
+import 'package:untitled/features/home/presentation/pages/home_page.dart';
 import 'package:untitled/features/real_states/presentoin/pages/real_states_page.dart';
+import 'package:untitled/features/requests/presentation/pages/my_requests_page.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -12,20 +16,6 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int _currentIndex = 0;
 
-  static final List<Widget> _pages = <Widget>[
-    const _HomePage(),
-    const _FinishingPage(),
-    const RealStatesPage(),
-    const _MyRequestsPage(),
-  ];
-
-  static final List<String> _titles = <String>[
-    'Home',
-    'Finishing',
-    'Real State',
-    'My Requests',
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -34,72 +24,50 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
+    final pages = <Widget>[
+      HomePage(onOpenTab: _onItemTapped),
+      const RealStatesPage(),
+      const FinishingCompaniesPage(),
+      const MyRequestsPage(),
+      const ProfileView(),
+    ];
+
     return Scaffold(
-      appBar: AppBar(title: Text(_titles[_currentIndex]), centerTitle: true),
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColor().secondaryColor,
-        unselectedItemColor: AppColor().primaryColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'companies',
+      body: IndexedStack(index: _currentIndex, children: pages),
+      bottomNavigationBar: NavigationBar(
+        height: 72,
+        elevation: 10,
+        shadowColor: Colors.black26,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        selectedIndex: _currentIndex,
+        onDestinationSelected: _onItemTapped,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: 'الرئيسية',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.apartment),
-            label: 'Real State',
+          NavigationDestination(
+            icon: Icon(Icons.apartment_outlined),
+            selectedIcon: Icon(Icons.apartment),
+            label: 'العقارات',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'My Requests',
+          NavigationDestination(
+            icon: Icon(Icons.business_outlined),
+            selectedIcon: Icon(Icons.business),
+            label: 'الشركات',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.assignment_outlined),
+            selectedIcon: Icon(Icons.assignment),
+            label: 'طلباتي',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person),
+            label: 'حسابي',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _HomePage extends StatelessWidget {
-  const _HomePage();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Home Page',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class _FinishingPage extends StatelessWidget {
-  const _FinishingPage();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Finishing Page',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class _MyRequestsPage extends StatelessWidget {
-  const _MyRequestsPage();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'My Requests Page',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
     );
   }

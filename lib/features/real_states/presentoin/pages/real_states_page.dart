@@ -1,10 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:untitled/core/utils/api_service.dart';
+import 'package:untitled/core/service_locator.dart';
 import 'package:untitled/core/utils/error_snackbar.dart';
-import 'package:untitled/features/real_states/data/data_source/real_state_remote_data_source.dart';
-import 'package:untitled/features/real_states/data/repo/real_state_repo_imp.dart';
 import 'package:untitled/features/real_states/domin/entites/real_state_entitey.dart';
 import 'package:untitled/features/real_states/domin/usecases/fetch_real_state_case.dart';
 import 'package:untitled/features/real_states/presentoin/manger/real_states_cubit/real_states_cubit.dart';
@@ -17,15 +14,8 @@ class RealStatesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RealStatesCubit(
-        FetchRealStateCase(
-          realStateRepo: RealStateRepoImp(
-            realStateRemoteDatasource: RealStateRemoteDatasourceImpl(
-              apiService: ApiService(dio: Dio()),
-            ),
-          ),
-        ),
-      )..fetchRealStates(),
+      create: (_) =>
+          RealStatesCubit(getIt<FetchRealStateCase>())..fetchRealStates(),
       child: const RealStatesView(),
     );
   }
